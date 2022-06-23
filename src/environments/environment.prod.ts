@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiURL: 'https://bp-pokemons.herokuapp.com/'
 };

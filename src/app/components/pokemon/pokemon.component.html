@@ -1,0 +1,25 @@
+<div class="container">
+    <h1>Listado de pokemon</h1>
+    <a href="#"  class="btn btn-success">Create New Pokemon</a>
+     
+    <table class="table table-bordered">
+      <tr>
+        <th>Nombre</th>
+        <th>Imagen</th>
+        <th>Ataque</th>
+        <th>Defensa</th>
+        <th width="220px">Acciones</th>
+      </tr>
+      <tr *ngFor="let pokemon of pokemonList">
+        <td>{{ pokemon.name }}</td>
+        <td>{{ pokemon.image }}</td>
+        <td>{{ pokemon.attack }}</td>
+        <td>{{ pokemon.defense }}</td>
+
+        <td>
+          <a href="#"  class="btn btn-primary">Editar</a>
+          <button type="button" (click)="deletePokemon(pokemon.id)" class="btn btn-danger">Borrar</button>
+        </td>
+      </tr>
+    </table>
+ </div>
