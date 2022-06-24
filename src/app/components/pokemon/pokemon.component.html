@@ -2,7 +2,7 @@
   <div class="buscar-pokemon">
     <div class="row">
       <div class="col">
-        <label for="search">Listado de pokemon</label> 
+        <label for="search">Listado de Pokémon</label> 
         <input class="input-inset" type="text" placeholder="Buscar" [(ngModel)]="searchString">
       </div>
       <div class="col">
@@ -25,7 +25,7 @@
       <tbody>
         <tr  *ngFor="let pokemon of pokemonList | filter : 'name' : searchString; let i = index" >
           <td>{{ pokemon.name }}</td>
-          <td> <img src='{{pokemon.image}}' alt="imagen"></td>
+          <td class="td-image"> <img src='{{pokemon.image}}' alt="{{pokemon.name}}"></td>
           <td>{{ pokemon.attack }}</td>
           <td>{{ pokemon.defense }}</td>
           <td width="40px">
@@ -38,7 +38,7 @@
   </div>
   
   <div id="formulario" *ngIf="addFormView">
-    <h1>Nuevo Pokemon</h1>
+    <h1>Nuevo Pokémon</h1>
     <form [formGroup]="form" (ngSubmit)="createPokemon()">
       <div class="row">
         <div class="form-group col">
@@ -92,7 +92,7 @@
   </div>
 
   <div id="formulario" *ngIf="editFormView">
-    <h1>Actualizar Pokemon</h1>
+    <h1>Actualizar Pokémon</h1>
     <form [formGroup]="form" (ngSubmit)="updatePokemon()">
       <div class="row">
         <div class="form-group col">

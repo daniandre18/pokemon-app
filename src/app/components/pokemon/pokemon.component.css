@@ -28,7 +28,6 @@ table.pokemon {
 
   table.pokemon img {
     width: 40px;
-    height: 30px;
   }
 
 
@@ -64,6 +63,12 @@ table.pokemon {
 	position:relative;
 	top:1px;
 }
+
+.boton-agregar:disabled,
+button[disabled]{
+  background-color: #afa9e5;
+}
+
 
 .buscar-pokemon{
     margin-bottom: 20px;
@@ -143,5 +148,8 @@ table.pokemon {
   margin-top: 10px;
 }
 
+.td-image {
+  text-align: center;
+}
 
 

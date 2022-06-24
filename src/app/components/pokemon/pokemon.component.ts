@@ -16,13 +16,16 @@ export class PokemonComponent implements OnInit {
   pokemonList : Pokemon[] =[];
   form!: FormGroup;
   form2!: FormGroup;
+
   faClose = faClose;
   faSave = faSave;
   faAdd = faAdd;
   faEdit = faEdit;
+
   addFormView = false;
   editFormView = false;
   submitted = false;
+  
   searchString: string ='';
   attack:number = 0;
   defense:number = 0;
@@ -95,7 +98,7 @@ export class PokemonComponent implements OnInit {
         this.getAllPokemon();
         this.resetForm();
         this.editFormView = false;
-    })
+      })
   }
 
   findPokemon(id:number){
