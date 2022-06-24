@@ -13,7 +13,7 @@ import { faClose, faSave, faAdd, faEdit } from '@fortawesome/free-solid-svg-icon
 })
 export class PokemonComponent implements OnInit {
 
-  pokemonList : Pokemon[] =[];
+  pokemonList : Pokemon[] = [];
   form!: FormGroup;
   form2!: FormGroup;
 
@@ -25,7 +25,7 @@ export class PokemonComponent implements OnInit {
   addFormView = false;
   editFormView = false;
   submitted = false;
-  
+
   searchString: string ='';
   attack:number = 0;
   defense:number = 0;
@@ -49,31 +49,41 @@ export class PokemonComponent implements OnInit {
       type:  new FormControl('electric', Validators.required),
     });
 
-    this.f['attack'].valueChanges.subscribe(value => {
+    this.f['attack'].valueChanges
+    .subscribe(value => {
        this.attack = value;
     });
 
-    this.f['defense'].valueChanges.subscribe(value => {
+    this.f['defense'].valueChanges
+    .subscribe(value => {
       this.defense = value;
-   });
-  }
-
-  getAllPokemon(){
-    this.pokemonService.getAll().subscribe((data : Pokemon[]) => {
-      this.pokemonList = data;
     });
   }
 
+  getAllPokemon(){
+    this.pokemonService.getAll()
+    .subscribe(
+      (data : Pokemon[]) => {
+      this.pokemonList = data;
+      }
+    );
+  }
+
   createPokemon() {
-    this.pokemonService.create(this.form.value).subscribe((res:Pokemon) => {
+    this.pokemonService.create(this.form.value)
+    .subscribe((res:Pokemon) => {
       this.pokemonList.push(res);
-    })
+      }
+    )
   }
 
   deletePokemon(id:number){
-    this.pokemonService.delete(id).subscribe(res => {
-      this.pokemonList = this.pokemonList.filter(item => item.id !== id);
-    })
+    this.pokemonService.delete(id)
+    .subscribe(
+      () => {
+        this.pokemonList = this.pokemonList.filter(item => item.id !== id);
+      }
+    )
   }
 
   loadPokemonData(id:number){
@@ -94,15 +104,18 @@ export class PokemonComponent implements OnInit {
 
   updatePokemon(){
     let id =  this.form.value.id;
-      this.pokemonService.update(id ,this.form.value).subscribe(res => {
-        this.getAllPokemon();
+      this.pokemonService.update(id ,this.form.value)
+      .subscribe(res => {
+        const index = this.pokemonList.findIndex( pokemon => pokemon.id === id);
+        this.pokemonList[index] = res;
         this.resetForm();
         this.editFormView = false;
       })
   }
 
   findPokemon(id:number){
-    this.pokemonService.findById(id).subscribe(res => {
+    this.pokemonService.findById(id)
+    .subscribe(res => {
       this.pokemonList = this.pokemonList.filter(item => item.id !== id);
     })
   }
