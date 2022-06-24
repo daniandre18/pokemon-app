@@ -30,10 +30,10 @@ export class PokemonComponent implements OnInit {
   attack:number = 0;
   defense:number = 0;
      
-  constructor( public pokemonService:PokemonService ) {}
+  constructor( private pokemonService:PokemonService ) {}
 
   ngOnInit(): void {
-    this.getAllPokemon();
+    this.getAll();
     this.pokemonform();
   }
 
@@ -60,7 +60,7 @@ export class PokemonComponent implements OnInit {
     });
   }
 
-  getAllPokemon(){
+  getAll(){
     this.pokemonService.getAll()
     .subscribe(
       (data : Pokemon[]) => {
@@ -69,7 +69,7 @@ export class PokemonComponent implements OnInit {
     );
   }
 
-  createPokemon() {
+  create() {
     this.pokemonService.create(this.form.value)
     .subscribe((res:Pokemon) => {
       this.pokemonList.push(res);
@@ -77,8 +77,8 @@ export class PokemonComponent implements OnInit {
     )
   }
 
-  deletePokemon(id:number){
-    this.pokemonService.delete(id)
+  delete(id:number){
+    this.pokemonService?.delete(id)
     .subscribe(
       () => {
         this.pokemonList = this.pokemonList.filter(item => item.id !== id);
@@ -86,7 +86,7 @@ export class PokemonComponent implements OnInit {
     )
   }
 
-  loadPokemonData(id:number){
+  loadData(id:number){
     this.addFormView = false;
     this.editFormView = true;
     let pokemon = this.pokemonList.find(item => item.id === id);
@@ -102,18 +102,18 @@ export class PokemonComponent implements OnInit {
     }); 
   }
 
-  updatePokemon(){
+  update(){
     let id =  this.form.value.id;
-      this.pokemonService.update(id ,this.form.value)
-      .subscribe(res => {
-        const index = this.pokemonList.findIndex( pokemon => pokemon.id === id);
-        this.pokemonList[index] = res;
-        this.resetForm();
-        this.editFormView = false;
-      })
+    this.pokemonService.update(id ,this.form.value)
+    .subscribe(res => {
+      const index = this.pokemonList.findIndex( pokemon => pokemon.id === id);
+      this.pokemonList[index] = res;
+      this.resetForm();
+      this.editFormView = false;
+    })
   }
 
-  findPokemon(id:number){
+  find(id:number){
     this.pokemonService.findById(id)
     .subscribe(res => {
       this.pokemonList = this.pokemonList.filter(item => item.id !== id);

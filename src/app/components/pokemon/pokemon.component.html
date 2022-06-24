@@ -29,8 +29,8 @@
           <td>{{ pokemon.attack }}</td>
           <td>{{ pokemon.defense }}</td>
           <td width="40px">
-            <button type="button" (click)="loadPokemonData(pokemon.id)" class="tiny-button"><fa-icon [icon]="faEdit"></fa-icon> </button>
-            <button type="button" (click)="deletePokemon(pokemon.id)" class="tiny-button"><fa-icon [icon]="faClose"></fa-icon> </button>
+            <button type="button" (click)="loadData(pokemon.id)" class="tiny-button"><fa-icon [icon]="faEdit"></fa-icon> </button>
+            <button type="button" (click)="delete(pokemon.id)" class="tiny-button"><fa-icon [icon]="faClose"></fa-icon> </button>
           </td>
         </tr>
       </tbody>  
@@ -39,7 +39,7 @@
   
   <div id="formulario" *ngIf="addFormView">
     <h1>Nuevo Pokémon</h1>
-    <form [formGroup]="form" (ngSubmit)="createPokemon()">
+    <form [formGroup]="form" (ngSubmit)="create()">
       <div class="row">
         <div class="form-group col">
             <label for="name">Nombre:</label>
@@ -93,7 +93,7 @@
 
   <div id="formulario" *ngIf="editFormView">
     <h1>Actualizar Pokémon</h1>
-    <form [formGroup]="form" (ngSubmit)="updatePokemon()">
+    <form [formGroup]="form" (ngSubmit)="update()">
       <div class="row">
         <div class="form-group col">
             <label for="name">Nombre:</label>
