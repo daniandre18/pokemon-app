@@ -1,0 +1,8 @@
+ .contenedor-principal {
+    min-height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f3f3;
+  }

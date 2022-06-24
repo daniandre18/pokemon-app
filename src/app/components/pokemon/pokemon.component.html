@@ -1,25 +1,94 @@
-<div class="container">
-    <h1>Listado de pokemon</h1>
-    <a href="#"  class="btn btn-success">Create New Pokemon</a>
-     
-    <table class="table table-bordered">
-      <tr>
-        <th>Nombre</th>
-        <th>Imagen</th>
-        <th>Ataque</th>
-        <th>Defensa</th>
-        <th width="220px">Acciones</th>
-      </tr>
-      <tr *ngFor="let pokemon of pokemonList">
-        <td>{{ pokemon.name }}</td>
-        <td>{{ pokemon.image }}</td>
-        <td>{{ pokemon.attack }}</td>
-        <td>{{ pokemon.defense }}</td>
+<div id="contenedor-pokemon"  >
+  <div class="buscar-pokemon">
+    <div class="row">
+      <div class="col">
+        <label for="search">Listado de pokemon</label> 
+        <input class="input-inset" type="text" placeholder="Buscar" [(ngModel)]="searchString">
+      </div>
+      <div class="col">
+        <a (click)="(loading === false ? toggleShow() : '')" class="boton-agregar"> <fa-icon [icon]="faAdd"></fa-icon>Nuevo</a>
+      </div>
+    </div>
+  </div>
 
-        <td>
-          <a href="#"  class="btn btn-primary">Editar</a>
-          <button type="button" (click)="deletePokemon(pokemon.id)" class="btn btn-danger">Borrar</button>
-        </td>
-      </tr>
+  <div id="pokemon-table" *ngIf="pokemonList.length > 0">
+    <table class="pokemon">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Imagen</th>
+          <th>Ataque</th>
+          <th>Defensa</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let pokemon of pokemonList | filter : 'name' : searchString; let i = index" >
+          <td>{{ pokemon.name }}</td>
+          <td> <img src='{{pokemon.image}}' alt="imagen"></td>
+          <td>{{ pokemon.attack }}</td>
+          <td>{{ pokemon.defense }}</td>
+          <td width="30px">
+            <button type="button" (click)="updatePokemon(pokemon.id)" class="tiny-button"><fa-icon [icon]="faEdit"></fa-icon> </button>
+            <button type="button" (click)="deletePokemon(pokemon.id)" class="tiny-button"><fa-icon [icon]="faClose"></fa-icon> </button>
+          </td>
+        </tr>
+      </tbody>  
     </table>
- </div>
+  </div>
+  
+  <div id="formulario" *ngIf="loading">
+    <h1>Nuevo Pokemon</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="form-group col">
+            <label for="name">Nombre:</label>
+            <input
+                formControlName="name"
+                id="name"
+                type="text"
+                class="form-control">
+            <div *ngIf="f['name'].touched && f['name'].invalid" class="alert alert-danger">
+                <div *ngIf="f['name'].errors && f['name'].errors['required']">Nombre requerido</div>
+            </div>
+        </div>
+        <div class="form-group col">
+          <div class="slidecontainer">
+            <label for="attack">Ataque:  </label>
+             0
+            <input type="range" min="0" max="100" value="0" class="slider" id="attack" formControlName="attack" oninput="this.nextElementSibling.value = this.value">
+            <output>0</output>
+          </div>   
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+            <label for="image">Imagen: </label>
+            <input
+                formControlName="image"
+                id="image"
+                type="text"
+                class="form-control">
+            <div *ngIf="f['image'].touched && f['image'].invalid" class="alert alert-danger">
+                <div *ngIf="f['image'].errors && f['image'].errors['required']"> Imagen Requerida</div>
+            </div>
+        </div>
+
+        <div class="form-group col">
+          <div class="slidecontainer">
+            <label for="defense">Defensa:</label>
+             0
+            <input type="range" min="0" max="100" value="0" class="slider" id="defense" formControlName="defense" oninput="this.nextElementSibling.value = this.value">
+            <output>0</output>
+            
+          </div>   
+        </div>
+      </div>
+
+      <div class="botones">
+        <button class="boton" type="submit" [disabled]="!form.valid"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+        <button class="boton" (click)="toggleShow()"> <fa-icon [icon]="faClose"></fa-icon> Cancelar</button>
+      </div> 
+    </form>
+  </div>
+</div>

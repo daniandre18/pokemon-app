@@ -36,7 +36,7 @@ export class PokemonService {
     )
   }  
     
-  find(id:number): Observable<Pokemon> {
+  findById(id:number): Observable<Pokemon> {
     return this.httpClient.get<Pokemon>(this.apiURL +'/'+ id)
     .pipe(
       catchError(this.errorHandler)
@@ -51,13 +51,12 @@ export class PokemonService {
   }
     
   delete(id:number){
-    return this.httpClient.delete<Pokemon>(this.apiURL +'/'+ id, this.httpOptions)
+    return this.httpClient.delete<Pokemon>(this.apiURL + id, this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }
-     
-   
+      
   errorHandler(error :any) {
     let errorMessage = '';
     if(error.error instanceof ErrorEvent) {
