@@ -3,6 +3,7 @@ import { PokemonComponent } from './pokemon.component';
 import { PokemonService } from 'src/app/services/pokemon.service';
 import { of } from "rxjs";
 
+
 describe('lista de pokemones', () => {
   let fixture: ComponentFixture<PokemonComponent>
   let component:PokemonComponent;
@@ -23,7 +24,6 @@ describe('lista de pokemones', () => {
   beforeEach(waitForAsync(() => {
      fixture = TestBed.createComponent(PokemonComponent);
      component = fixture.componentInstance;
-     fixture.detectChanges();
   }))
 
   it('El componente se debe instanciar ', () => {
@@ -40,9 +40,9 @@ describe('lista de pokemones', () => {
     expect(component.pokemonList.length).toBe(1);
   });
 
- /* it('El metodo create de agregar un pokemon ', () => {
+  it('El metodo create de agregar un pokemon ', () => {
     const newPokemon =  {id:12,name:'pikachu',image:'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/009.png',attack:56,defense:65,hp:23,type:'water',idAuthor:2}
-    pokemonHttpSpy.create.and.returnValue(of(newPokemon));
+    pokemonHttpSpy.create.and.returnValue(of());
     component.create()
     expect(component.pokemonList.length).toBe(1);
   });
@@ -68,6 +68,6 @@ describe('lista de pokemones', () => {
     component.delete(newPokemon.id);
     expect(component.pokemonList.length).toBe(0);
 
-  });*/
+  });
 
 });
