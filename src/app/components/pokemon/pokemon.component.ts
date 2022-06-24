@@ -20,31 +20,52 @@ export class PokemonComponent implements OnInit {
   faSave = faSave;
   faAdd = faAdd;
   faEdit = faEdit;
-  loading = false;
+  addFormView = false;
+  editFormView = false;
   submitted = false;
   searchString: string ='';
+  attack:number = 0;
+  defense:number = 0;
      
-  constructor( public pokemonService:PokemonService) { }
+  constructor( public pokemonService:PokemonService ) {}
 
   ngOnInit(): void {
-    this.loading = true;
-    this.pokemonService.getAll().subscribe((data : Pokemon[]) => {
-      this.pokemonList = data;
-      this.loading = false;
-      console.log("pokemones", this.pokemonList);
-    });
-    
+    this.getAllPokemon();
+    this.pokemonform();
+  }
+
+  pokemonform(){
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
+      id:new FormControl(0, Validators.required),
+      name: new FormControl(null, [Validators.required]),
       attack: new FormControl(0, Validators.required),
       image: new FormControl('https://assets.pokemon.com/assets/cms2/img/pokedex/detail/009.png', Validators.required),
       defense: new FormControl(0, Validators.required),
-      idAuthor  : new FormControl(1, Validators.required),
+      idAuthor : new FormControl(2, Validators.required),
       hp: new FormControl(35, Validators.required),
       type:  new FormControl('electric', Validators.required),
     });
+
+    this.f['attack'].valueChanges.subscribe(value => {
+       this.attack = value;
+    });
+
+    this.f['defense'].valueChanges.subscribe(value => {
+      this.defense = value;
+   });
   }
 
+  getAllPokemon(){
+    this.pokemonService.getAll().subscribe((data : Pokemon[]) => {
+      this.pokemonList = data;
+    });
+  }
+
+  createPokemon() {
+    this.pokemonService.create(this.form.value).subscribe((res:Pokemon) => {
+      this.pokemonList.push(res);
+    })
+  }
 
   deletePokemon(id:number){
     this.pokemonService.delete(id).subscribe(res => {
@@ -52,41 +73,47 @@ export class PokemonComponent implements OnInit {
     })
   }
 
-  updatePokemon(id:number){
-    this.pokemonService.update(id,this.form.value).subscribe(res => {
-      this.pokemonList = this.pokemonList.filter(item => item.id !== id);
+  loadPokemonData(id:number){
+    this.addFormView = false;
+    this.editFormView = true;
+    let pokemon = this.pokemonList.find(item => item.id === id);
+    this.form.patchValue({
+      id: pokemon?.id,
+      name: pokemon?.name,
+      idAuthor:2,
+      attack: pokemon?.attack,
+      image: pokemon?.image ,
+      defense: pokemon?.defense,
+      hp:  pokemon?.hp ,
+      type:  pokemon?.type
+    }); 
+  }
+
+  updatePokemon(){
+    let id =  this.form.value.id;
+      this.pokemonService.update(id ,this.form.value).subscribe(res => {
+        this.getAllPokemon();
+        this.resetForm();
+        this.editFormView = false;
     })
   }
 
-  findpokemon(id:number){
-    this.pokemonService.findById(id,).subscribe(res => {
+  findPokemon(id:number){
+    this.pokemonService.findById(id).subscribe(res => {
       this.pokemonList = this.pokemonList.filter(item => item.id !== id);
     })
-  }
-
-  get f(){
-    return this.form.controls;
   }
 
   toggleShow() {
-    this.loading = ! this.loading;
-  }
-
-  submit(){
-    this.pokemonService.create(this.form.value).subscribe((res:Pokemon) => {
-      this.pokemonList.push(res);
-     
-    })
-  }
-
-  applyFilter(filterValue: string) {
-    this.pokemonList.filter(i => i.name.toLowerCase().includes(filterValue.toLowerCase()));
+    this.pokemonform();
+    this.addFormView = ! this.addFormView; 
+    this.editFormView = false;
   }
 
   resetForm() {
     this.form.reset();
   }
-
-  
-
+  get f(){
+    return this.form.controls;
+  }
 }

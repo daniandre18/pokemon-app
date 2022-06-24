@@ -6,7 +6,7 @@
         <input class="input-inset" type="text" placeholder="Buscar" [(ngModel)]="searchString">
       </div>
       <div class="col">
-        <a (click)="(loading === false ? toggleShow() : '')" class="boton-agregar"> <fa-icon [icon]="faAdd"></fa-icon>Nuevo</a>
+        <a (click)="(addFormView === false ? toggleShow() : '')" class="boton-agregar"> <fa-icon [icon]="faAdd"></fa-icon> Nuevo</a>
       </div>
     </div>
   </div>
@@ -28,8 +28,8 @@
           <td> <img src='{{pokemon.image}}' alt="imagen"></td>
           <td>{{ pokemon.attack }}</td>
           <td>{{ pokemon.defense }}</td>
-          <td width="30px">
-            <button type="button" (click)="updatePokemon(pokemon.id)" class="tiny-button"><fa-icon [icon]="faEdit"></fa-icon> </button>
+          <td width="40px">
+            <button type="button" (click)="loadPokemonData(pokemon.id)" class="tiny-button"><fa-icon [icon]="faEdit"></fa-icon> </button>
             <button type="button" (click)="deletePokemon(pokemon.id)" class="tiny-button"><fa-icon [icon]="faClose"></fa-icon> </button>
           </td>
         </tr>
@@ -37,9 +37,9 @@
     </table>
   </div>
   
-  <div id="formulario" *ngIf="loading">
+  <div id="formulario" *ngIf="addFormView">
     <h1>Nuevo Pokemon</h1>
-    <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form" (ngSubmit)="createPokemon()">
       <div class="row">
         <div class="form-group col">
             <label for="name">Nombre:</label>
@@ -56,8 +56,8 @@
           <div class="slidecontainer">
             <label for="attack">Ataque:  </label>
              0
-            <input type="range" min="0" max="100" value="0" class="slider" id="attack" formControlName="attack" oninput="this.nextElementSibling.value = this.value">
-            <output>0</output>
+            <input type="range" min="0" max="100" value="0" class="slider" id="attack" formControlName="attack">
+            <output>{{attack}}</output>
           </div>   
         </div>
       </div>
@@ -78,15 +78,69 @@
           <div class="slidecontainer">
             <label for="defense">Defensa:</label>
              0
-            <input type="range" min="0" max="100" value="0" class="slider" id="defense" formControlName="defense" oninput="this.nextElementSibling.value = this.value">
-            <output>0</output>
-            
+            <input type="range" min="0" max="100" value="0" class="slider" id="defense" formControlName="defense">
+            <output>{{defense}}</output>
           </div>   
         </div>
       </div>
 
       <div class="botones">
         <button class="boton" type="submit" [disabled]="!form.valid"> <fa-icon [icon]="faSave"></fa-icon> Guardar</button>
+        <button class="boton" (click)="toggleShow()"> <fa-icon [icon]="faClose"></fa-icon> Cancelar</button>
+      </div> 
+    </form>
+  </div>
+
+  <div id="formulario" *ngIf="editFormView">
+    <h1>Actualizar Pokemon</h1>
+    <form [formGroup]="form" (ngSubmit)="updatePokemon()">
+      <div class="row">
+        <div class="form-group col">
+            <label for="name">Nombre:</label>
+            <input
+                formControlName="name"
+                id="name"
+                type="text"
+                class="form-control">
+            <div *ngIf="f['name'].touched && f['name'].invalid" class="alert alert-danger">
+                <div *ngIf="f['name'].errors && f['name'].errors['required']">Nombre requerido</div>
+            </div>
+        </div>
+        <div class="form-group col">
+          <div class="slidecontainer">
+            <label for="attack">Ataque:  </label>
+             0
+            <input type="range" min="0" max="100" value="0" class="slider" id="attack" formControlName="attack">
+            <output>{{attack}}</output>
+          </div>   
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+            <label for="image">Imagen: </label>
+            <input
+                formControlName="image"
+                id="image"
+                type="text"
+                class="form-control">
+            <div *ngIf="f['image'].touched && f['image'].invalid" class="alert alert-danger">
+                <div *ngIf="f['image'].errors && f['image'].errors['required']"> Imagen Requerida</div>
+            </div>
+        </div>
+
+        <div class="form-group col">
+          <div class="slidecontainer">
+            <label for="defense">Defensa:</label>
+             0
+            <input type="range" min="0" max="100" value="0" class="slider" id="defense" formControlName="defense">
+            <output>{{defense}}</output>
+            
+          </div>   
+        </div>
+      </div>
+
+      <div class="botones">
+        <button class="boton" type="submit" [disabled]="!form.valid"> <fa-icon [icon]="faSave"></fa-icon> Actualizar</button>
         <button class="boton" (click)="toggleShow()"> <fa-icon [icon]="faClose"></fa-icon> Cancelar</button>
       </div> 
     </form>

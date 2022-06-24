@@ -23,7 +23,7 @@ export class PokemonService {
   constructor(private httpClient: HttpClient) { }
 
   getAll(): Observable<Pokemon[]> {
-    return this.httpClient.get<Pokemon[]>(this.apiURL+'?idAuthor=1')
+    return this.httpClient.get<Pokemon[]>(this.apiURL+'?idAuthor=2')
     .pipe(
       catchError(this.errorHandler)
     )
@@ -37,14 +37,14 @@ export class PokemonService {
   }  
     
   findById(id:number): Observable<Pokemon> {
-    return this.httpClient.get<Pokemon>(this.apiURL +'/'+ id)
+    return this.httpClient.get<Pokemon>(this.apiURL + id)
     .pipe(
       catchError(this.errorHandler)
     )
   }
     
   update(id:number, pokemon:Pokemon): Observable<Pokemon> {
-    return this.httpClient.put<Pokemon>(this.apiURL +'/'+ id, JSON.stringify(pokemon), this.httpOptions)
+    return this.httpClient.put<Pokemon>(this.apiURL + id, JSON.stringify(pokemon), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )

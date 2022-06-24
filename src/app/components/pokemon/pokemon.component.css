@@ -1,7 +1,7 @@
 
 table.pokemon {
     font-family: Arial, Helvetica, sans-serif;
-    border: 1px solid #d7d7d7;
+    border: 2px solid #d7d7d7;
     background-color: #FFFFFF;
     width: 720px;
     text-align: left;
@@ -35,8 +35,8 @@ table.pokemon {
   /* Create two equal columns that floats next to each other */
 
 .row {
-overflow: hidden;
-margin-bottom: 5px;
+  overflow: hidden;
+  margin-bottom: 15px;
 }
 
 .col {
@@ -48,7 +48,7 @@ margin-bottom: 5px;
 .boton-agregar {
     background-color: #6558f6;
     border-radius: 4px;
-    border: 1px solid #ededed;
+    border: 1px solid #080101;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
@@ -56,9 +56,8 @@ margin-bottom: 5px;
     font-size: 15px;
     padding: 10px 14px;
     text-decoration: none;
-    width: 70px;
     float:right;
-    margin-top: 51px;
+    margin-top: 50px;
 }
 
 .boton-agregar:active {
@@ -118,6 +117,7 @@ margin-bottom: 5px;
     font-size: 15px;
     padding: 10px 14px;
     text-decoration: none;
+    margin: 5px;
 }
 
 .botones{
@@ -138,8 +138,10 @@ margin-bottom: 5px;
   cursor: pointer;
   vertical-align: middle;
   text-align: center;
-
 }
-  
+.slidecontainer{
+  margin-top: 10px;
+}
+
 
 

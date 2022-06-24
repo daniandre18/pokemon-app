@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchPipe } from './pipes/search.pipe';
 
-
 @NgModule({
   declarations: [
     AppComponent,
